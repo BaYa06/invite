@@ -33,7 +33,13 @@ export default function EnvelopeScreen({ groomName, brideName, date, initial, on
     <div ref={screenRef} className="env-screen">
       <p className="env-hint">Вам письмо</p>
 
-      <div className={`env-wrap${opened ? ' open' : ''}`}>
+      <button
+        type="button"
+        className={`env-wrap${opened ? ' open' : ''}`}
+        onTouchStart={handleOpen}
+        onClick={handleOpen}
+        style={{ background: 'none', border: 'none', padding: 0 }}
+      >
         <div className="env-flap">
           <div className="env-flap-tri" />
         </div>
@@ -48,7 +54,7 @@ export default function EnvelopeScreen({ groomName, brideName, date, initial, on
           <div className="env-sb" />
           <div className="env-seal">{initial}</div>
         </div>
-      </div>
+      </button>
 
       <button
         type="button"

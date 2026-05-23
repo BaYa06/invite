@@ -1,6 +1,6 @@
 'use client'
 
-import { useFadeUp } from '@/hooks/useFadeUp'
+import { useScrollReveal } from '@/hooks/useFadeUp'
 import { useCountdown } from '@/hooks/useCountdown'
 
 type Props = {
@@ -12,7 +12,7 @@ function Pad(n: number) {
 }
 
 export default function CountdownBlock({ targetDate }: Props) {
-  const ref = useFadeUp<HTMLElement>()
+  const ref = useScrollReveal<HTMLElement>('zoom-in')
   const { days, hours, minutes, seconds } = useCountdown(targetDate)
 
   return (

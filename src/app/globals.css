@@ -37,16 +37,47 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Fade-up (IntersectionObserver) ── */
+/* ── Scroll animations ── */
 .fade-up {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
-.fade-up.visible {
-  opacity: 1;
-  transform: translateY(0);
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+.fade-left {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
+.fade-left.visible { opacity: 1; transform: translateX(0); }
+
+.fade-right {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-right.visible { opacity: 1; transform: translateX(0); }
+
+.zoom-in {
+  opacity: 0;
+  transform: scale(0.88);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.zoom-in.visible { opacity: 1; transform: scale(1); }
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.fade-in.visible { opacity: 1; }
+
+/* Задержки для stagger-эффекта */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.35s; }
+.delay-4 { transition-delay: 0.5s; }
+.delay-5 { transition-delay: 0.65s; }
 
 /* ── Envelope screen ── */
 .env-screen {

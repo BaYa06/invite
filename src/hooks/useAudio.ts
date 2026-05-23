@@ -27,5 +27,11 @@ export function useAudio(url?: string) {
     }
   }, [playing])
 
-  return { playing, toggle }
+  const play = useCallback(() => {
+    if (!audioRef.current || playing) return
+    audioRef.current.play()
+    setPlaying(true)
+  }, [playing])
+
+  return { playing, toggle, play }
 }

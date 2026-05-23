@@ -1,10 +1,10 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { useAudio } from '@/hooks/useAudio'
 import EnvelopeScreen from '@/components/envelope/EnvelopeScreen'
 import HeroBlock from '@/components/invitation/HeroBlock'
 import MusicButton from '@/components/invitation/MusicButton'
-import NamesBlock from '@/components/invitation/NamesBlock'
 import CalendarBlock from '@/components/invitation/CalendarBlock'
 import InviteTextBlock from '@/components/invitation/InviteTextBlock'
 import PhotoBlock from '@/components/invitation/PhotoBlock'
@@ -17,28 +17,29 @@ import type { RSVPFormData } from '@/types'
 // TODO: заменить на fetch из Supabase по slug
 const MOCK = {
   groomName: 'Айбек',
-  brideName: 'Айгерим',
+  brideName: 'Жибек',
   initial: 'А',
-  date: '2026-04-19',
-  dateFormatted: '19 апреля 2026',
-  dateDots: '19 · 04 · 2026',
+  date: '2026-08-28',
+  dateFormatted: '28 августа 2026',
+  dateDots: '28 · 08 · 2026',
   time: '18:00',
-  venue: 'Ресторан «Корона»',
-  address: 'г. Бишкек, ул. Манаса, 40',
-  mapUrl: 'https://maps.google.com',
-  photoHero: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80',
+  venue: 'Jannat Regency',
+  address: 'г. Бишкек',
+  mapUrl: 'https://2gis.kg/bishkek/geo/70000001019360746/74.617387,42.820464',
+  photoHero: '/hero.jpg',
   photoCouple: 'https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1200&q=80',
-  musicUrl: undefined as string | undefined,
+  musicUrl: '/music.mp3',
   guestName: undefined as string | undefined,
 }
 
 export default function InvitePage() {
   const [opened, setOpened] = useState(false)
   const landingRef = useRef<HTMLDivElement>(null)
+  const { playing, toggle, play } = useAudio(MOCK.musicUrl)
 
   const handleOpen = () => {
     setOpened(true)
-    // плавное появление лендинга
+    play()
     setTimeout(() => {
       if (landingRef.current) {
         landingRef.current.style.opacity = '1'
@@ -77,11 +78,10 @@ export default function InvitePage() {
           photoUrl={MOCK.photoHero}
         />
 
-        <MusicButton musicUrl={MOCK.musicUrl} />
-        <NamesBlock groomName={MOCK.groomName} brideName={MOCK.brideName} />
+        <MusicButton musicUrl={MOCK.musicUrl} playing={playing} onToggle={toggle} />
         <CalendarBlock date={MOCK.date} />
         <InviteTextBlock guestName={MOCK.guestName} />
-        <PhotoBlock url={MOCK.photoHero} />
+        <PhotoBlock url="/photo2.jpg" />
         <DetailsBlock
           date={MOCK.dateFormatted}
           time={MOCK.time}
@@ -91,7 +91,7 @@ export default function InvitePage() {
         />
         <CountdownBlock targetDate={MOCK.date} />
         <RSVPForm guestName={MOCK.guestName} onSubmit={handleRSVP} />
-        <PhotoBlock url={MOCK.photoCouple} position="center 30%" />
+        <PhotoBlock url="/photo3.jpg" position="center 30%" />
         <FooterBlock
           groomName={MOCK.groomName}
           brideName={MOCK.brideName}

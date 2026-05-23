@@ -1,9 +1,10 @@
 'use client'
 
-import { useFadeUp } from '@/hooks/useFadeUp'
+import { useScrollReveal } from '@/hooks/useFadeUp'
+
 
 type Props = {
-  date: string  // ISO: '2026-04-19'
+  date: string  // ISO: '2026-08-28'
 }
 
 const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
@@ -22,8 +23,19 @@ function buildCalendar(year: number, month: number) {
   return cells
 }
 
+function Heart() {
+  return (
+    <img
+      src="/heart.png"
+      alt=""
+      className="pointer-events-none absolute w-14 h-14"
+      style={{ top: '-6px', left: '50%', transform: 'translateX(-50%)' }}
+    />
+  )
+}
+
 export default function CalendarBlock({ date }: Props) {
-  const ref = useFadeUp<HTMLElement>()
+  const ref = useScrollReveal<HTMLElement>('zoom-in')
   const d = new Date(date)
   const year = d.getFullYear()
   const month = d.getMonth()
@@ -31,28 +43,36 @@ export default function CalendarBlock({ date }: Props) {
   const cells = buildCalendar(year, month)
 
   return (
-    <section ref={ref} className="fade-up py-8 px-6 bg-white text-center">
-      <p className="font-script text-[44px] text-dark mb-6">{MONTHS_RU[month]}</p>
+    <section ref={ref} className="fade-up py-10 px-6 bg-white text-center">
+      {/* Название месяца */}
+      <p className="font-script text-[64px] leading-tight text-dark mb-1">{MONTHS_RU[month]}</p>
+      <p className="font-ui text-[11px] tracking-[4px] text-muted uppercase mb-6">{year}</p>
+
       <div className="max-w-xs mx-auto">
-        <div className="grid grid-cols-7 mb-1">
+        {/* Дни недели */}
+        <div className="grid grid-cols-7 mb-2">
           {DAYS.map(d => (
-            <span key={d} className="font-serif text-xs text-muted italic py-1.5 text-center">{d}</span>
+            <span key={d} className="font-ui text-[10px] tracking-[1px] text-muted uppercase py-1 text-center">
+              {d}
+            </span>
           ))}
         </div>
+
+        {/* Ячейки */}
         <div className="grid grid-cols-7">
           {cells.map((cell, i) => {
             const isHighlight = cell === day
             return (
               <span
                 key={i}
-                className={`font-serif text-base py-2 text-center relative ${
+                className={`relative flex items-center justify-center py-2 ${
                   cell === null ? 'invisible' : ''
-                } ${isHighlight ? 'text-gold font-medium' : 'text-dark'}`}
+                }`}
               >
-                {isHighlight && (
-                  <span className="absolute inset-[-2px] m-auto w-9 h-9 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold opacity-60 pointer-events-none" />
-                )}
-                {cell}
+                {isHighlight && <Heart />}
+                <span className="relative z-10 font-serif text-base text-dark">
+                  {cell}
+                </span>
               </span>
             )
           })}

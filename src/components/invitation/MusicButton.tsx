@@ -5,10 +5,14 @@ import { useAudio } from '@/hooks/useAudio'
 type Props = {
   musicUrl?: string
   label?: string
+  playing?: boolean
+  onToggle?: () => void
 }
 
-export default function MusicButton({ musicUrl, label = 'БАСЫҢЫЗ' }: Props) {
-  const { playing, toggle } = useAudio(musicUrl)
+export default function MusicButton({ musicUrl, label = 'НАЖМИТЕ', playing: externalPlaying, onToggle }: Props) {
+  const internal = useAudio(onToggle ? undefined : musicUrl)
+  const playing = onToggle ? (externalPlaying ?? false) : internal.playing
+  const toggle = onToggle ?? internal.toggle
 
   if (!musicUrl) return null
 

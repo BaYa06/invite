@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useFadeUp } from '@/hooks/useFadeUp'
+import { useScrollReveal } from '@/hooks/useFadeUp'
 import type { RSVPFormData } from '@/types'
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 }
 
 export default function RSVPForm({ guestName, onSubmit }: Props) {
-  const ref = useFadeUp<HTMLElement>()
+  const ref = useScrollReveal<HTMLElement>('fade-up')
   const [form, setForm] = useState<RSVPFormData>({
     name: guestName || '',
     partnerName: '',

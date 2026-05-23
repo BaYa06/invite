@@ -16,7 +16,7 @@ import type { RSVPFormData } from '@/types'
 
 // TODO: заменить на fetch из Supabase по slug
 const MOCK = {
-  groomName: 'Айбек',
+  groomName: 'Батый',
   brideName: 'Жибек',
   initial: 'А',
   date: '2026-08-28',

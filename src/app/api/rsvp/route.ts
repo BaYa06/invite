@@ -11,15 +11,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Bot not configured' }, { status: 500 })
   }
 
-  const status = attending ? '✅ Придёт' : '❌ Не смогёт'
-  const partner = partnerName ? `\n👫 Спутник/спутница: ${partnerName}` : ''
-  const wishesLine = wishes ? `\n💬 Пожелание: ${wishes}` : ''
+  const partner = partnerName
+    ? `👫 Со спутником/спутницей: Да — ${partnerName}`
+    : `👫 Со спутником/спутницей: Нет`
+  const wishesLine = wishes ? `\n💬 Пожелание:\n«${wishes}»` : ''
 
   const text =
-    `🎉 Новый ответ на приглашение!\n\n` +
-    `👤 Имя: ${name}\n` +
+    `📩 Новый ответ на приглашение!\n\n` +
+    `👤 Гость: ${name}\n` +
+    `✅ Придёт: ${attending ? 'Да' : 'Нет'}\n` +
     `${partner}` +
-    `${status}` +
     `${wishesLine}`
 
   const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
